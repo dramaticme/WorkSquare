@@ -7,7 +7,7 @@ namespace worksquare.Model
         public required int UserId { get; set; }
         public required User User { get; set; }
         public required int CompanyId { get; set; }
-        public RoleEnum Role { get; set; }
+        public CompanyRoleEnum Role { get; set; }
         public required int ManagerId { get; set; }
 
     }
