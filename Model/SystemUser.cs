@@ -6,6 +6,6 @@ namespace worksquare.Model
     {
         public required int UserId { get; set; }
         public required User User { get; set; }
-        public RoleEnum Role { get; set; }
+        public SystemRoleEnum Role { get; set; }
     }
 }
