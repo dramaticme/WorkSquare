@@ -18,6 +18,7 @@ builder.Services.AddHttpContextAccessor();
 // ── Application Services ───────────────────────────────────────────────────
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 
 // ── JWT Authentication ─────────────────────────────────────────────────────
 var jwtKey = builder.Configuration["Jwt:Key"]
