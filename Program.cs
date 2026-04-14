@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -46,6 +48,40 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// Security / Middleware Configurations
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DefaultPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "https://worksquare.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // needed if using cookies for CSRF
+    });
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: partition => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 100,
+                QueueLimit = 0,
+                Window = TimeSpan.FromMinutes(1)
+            }));
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
+// Configure Antiforgery (CSRF Protection) - mostly useful if we ever switch
+// refresh tokens or sessions to cookies. Currently API is fully JWT Bearer payload.
+builder.Services.AddAntiforgery(options => 
+{
+    options.HeaderName = "X-XSRF-TOKEN";
+});
+
 // Controllers + OpenAPI
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -53,12 +89,18 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 
 // HTTP Pipeline
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<SecurityHeaderMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("DefaultPolicy");
+app.UseRateLimiter();
 
 // Authentication must come before Authorization
 app.UseAuthentication();
@@ -67,7 +109,11 @@ app.UseAuthentication();
 // the token signature has been validated by UseAuthentication().
 app.UseMiddleware<JwtMiddleware>();
 
+// Custom middleware to extract the companyId from authenticated identities
+app.UseMiddleware<TenantResolutionMiddleware>();
+
 app.UseAuthorization();
+app.UseAntiforgery();
 
 app.MapControllers();
 
