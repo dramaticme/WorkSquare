@@ -7,7 +7,7 @@ namespace worksquare.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        // ── Core entities ────────────────────────────────────────────────
+        // Core entities
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyDetails> CompanyDetails { get; set; }
@@ -18,11 +18,11 @@ namespace worksquare.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<Project> Projects { get; set; }
 
-        // ── Auth entities ─────────────────────────────────────────────────
+        // Auth entities
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<UserSession> UserSessions { get; set; }
 
-        // ── Permission entities ───────────────────────────────────────────
+        // Permission entities
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
 

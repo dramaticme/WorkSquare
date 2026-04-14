@@ -36,7 +36,7 @@ namespace worksquare.Middleware
                 return;
             }
 
-            // ── 1. Extract claims ─────────────────────────────────────────────────
+            // 1. Extract claims
             var userIdStr    = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                             ?? context.User.FindFirst("sub")?.Value;
             var companyIdStr = context.User.FindFirst("companyId")?.Value;
@@ -49,7 +49,7 @@ namespace worksquare.Middleware
                 return;
             }
 
-            // ── 2. Verify userId exists in DB ─────────────────────────────────────
+            // 2. Verify userId exists in DB
             var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
             if (user is null)
             {
@@ -58,7 +58,7 @@ namespace worksquare.Middleware
                 return;
             }
 
-            // ── 3. Verify user.IsActive ───────────────────────────────────────────
+            // 3. Verify user.IsActive
             if (!user.IsActive)
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -66,7 +66,7 @@ namespace worksquare.Middleware
                 return;
             }
 
-            // ── 4. Verify companyId exists in DB (CompanyUser only) ────────────────
+            // 4. Verify companyId exists in DB (CompanyUser only)
             if (userType == "CompanyUser")
             {
                 if (!int.TryParse(companyIdStr, out var companyId))

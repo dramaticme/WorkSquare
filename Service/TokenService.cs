@@ -23,7 +23,7 @@ namespace worksquare.Service
             _config = config;
         }
 
-        // ─── Access Token ─────────────────────────────────────────────────────────
+        // Access Token
 
         /// <summary>
         /// Creates a 15-minute signed JWT access token.
@@ -47,7 +47,7 @@ namespace worksquare.Service
             return BuildToken(claims, expiry);
         }
 
-        // ─── Refresh Token ────────────────────────────────────────────────────────
+        // Refresh Token
 
         /// <summary>
         /// Creates a 7-day signed JWT refresh token.
@@ -71,7 +71,7 @@ namespace worksquare.Service
             return (BuildToken(claims, expires), jti, expires);
         }
 
-        // ─── Validation ───────────────────────────────────────────────────────────
+        // Validation
 
         /// <summary>
         /// Validates a token's signature and expiry WITHOUT requiring the DB.
@@ -105,7 +105,7 @@ namespace worksquare.Service
             }
         }
 
-        // ─── Helpers ──────────────────────────────────────────────────────────────
+        // Helpers
 
         private string BuildToken(Claim[] claims, DateTime expiry)
         {

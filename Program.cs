@@ -8,19 +8,19 @@ using worksquare.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ── Database ───────────────────────────────────────────────────────────────
+// Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ── HTTP Context Accessor (needed by AuthService for client IP) ────────────
+// HTTP Context Accessor (needed by AuthService for client IP)
 builder.Services.AddHttpContextAccessor();
 
-// ── Application Services ───────────────────────────────────────────────────
+// Application Services
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 
-// ── JWT Authentication ─────────────────────────────────────────────────────
+// JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Jwt:Key is not configured.");
 
@@ -46,13 +46,13 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// ── Controllers + OpenAPI ──────────────────────────────────────────────────
+// Controllers + OpenAPI
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// ── HTTP Pipeline ──────────────────────────────────────────────────────────
+// HTTP Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

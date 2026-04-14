@@ -21,7 +21,7 @@ namespace worksquare.Service
             _httpContextAccessor = httpContextAccessor;
         }
 
-        // ─── Login ────────────────────────────────────────────────────────────────
+        // Login
 
         /// <summary>
         /// Validates credentials, checks IsActive, resolves role, issues token pair,
@@ -42,7 +42,7 @@ namespace worksquare.Service
 
             if (!user.IsActive) return null;
 
-            // ── Resolve company + role ────────────────────────────────────────────
+            // Resolve company + role
             int    companyId;
             string role;
             string userType;
@@ -66,11 +66,11 @@ namespace worksquare.Service
 
             var ip = GetClientIp();
 
-            // ── Issue tokens ──────────────────────────────────────────────────────
+            // Issue tokens
             var accessToken                        = _tokenService.CreateAccessToken(user, companyId, role, userType);
             var (refreshTokenStr, jti, expiresAt)  = _tokenService.CreateRefreshToken(user, companyId);
 
-            // ── Persist refresh token (whitelist) ─────────────────────────────────
+            // Persist refresh token (whitelist)
             var refreshToken = new RefreshToken
             {
                 Jti       = jti,
@@ -82,7 +82,7 @@ namespace worksquare.Service
             };
             _db.RefreshTokens.Add(refreshToken);
 
-            // ── Persist session ───────────────────────────────────────────────────
+            // Persist session
             var session = new UserSession
             {
                 UserId           = user.Id,
@@ -103,7 +103,7 @@ namespace worksquare.Service
             };
         }
 
-        // ─── Refresh ──────────────────────────────────────────────────────────────
+        // Refresh
 
         /// <summary>
         /// Validates the incoming refresh token against the DB whitelist,
@@ -148,7 +148,7 @@ namespace worksquare.Service
                             || (companyId == 0 && user.SystemUser is not null);
             if (!validCompany) return null;
 
-            // ── Resolve role ──────────────────────────────────────────────────────
+            // Resolve role
             string role;
             string userType;
             if (user.CompanyUser is not null)
@@ -209,7 +209,7 @@ namespace worksquare.Service
             };
         }
 
-        // ─── Logout ───────────────────────────────────────────────────────────────
+        // Logout
 
         /// <summary>
         /// Revokes the specified refresh token and deactivates its session.
@@ -236,7 +236,7 @@ namespace worksquare.Service
             return true;
         }
 
-        // ─── Helpers ──────────────────────────────────────────────────────────────
+        // Helpers
 
         private string GetClientIp()
         {

@@ -7,7 +7,7 @@ namespace worksquare.Permissions
     /// </summary>
     public static class Permissions
     {
-        // ── Dashboard ─────────────────────────────────────────────────────
+        // Dashboard
         public static class Dashboard
         {
             public const string View                       = "Dashboard.View";
@@ -23,7 +23,7 @@ namespace worksquare.Permissions
             public const string ViewCompanyMetrics         = "Dashboard.ViewCompanyMetrics";
         }
 
-        // ── Targets (Kanban) ──────────────────────────────────────────────
+        // Targets (Kanban)
         public static class Targets
         {
             public const string ViewOwn              = "Targets.View.Own";
@@ -36,7 +36,7 @@ namespace worksquare.Permissions
             public const string FilterByEmployee     = "Targets.FilterByEmployee";
         }
 
-        // ── Projects ─────────────────────────────────────────────────────
+        // Projects
         public static class Projects
         {
             public const string ViewOwn              = "Projects.View.Own";
@@ -53,7 +53,7 @@ namespace worksquare.Permissions
             public const string ViewClientInfo       = "Projects.ViewClientInfo";
         }
 
-        // ── Tasks ─────────────────────────────────────────────────────────
+        // Tasks
         public static class Tasks
         {
             public const string ViewOwn              = "Tasks.View.Own";
@@ -73,7 +73,7 @@ namespace worksquare.Permissions
             public const string SetDueDate           = "Tasks.SetDueDate";
         }
 
-        // ── Issues ────────────────────────────────────────────────────────
+        // Issues
         public static class Issues
         {
             public const string ViewOwn              = "Issues.View.Own";
@@ -91,7 +91,7 @@ namespace worksquare.Permissions
             public const string SetPriority          = "Issues.SetPriority";
         }
 
-        // ── Tickets ───────────────────────────────────────────────────────
+        // Tickets
         public static class Tickets
         {
             public const string ViewOwn              = "Tickets.View.Own";
@@ -108,7 +108,7 @@ namespace worksquare.Permissions
             public const string Bookmark             = "Tickets.Bookmark";
         }
 
-        // ── Employees ─────────────────────────────────────────────────────
+        // Employees
         public static class Employees
         {
             public const string ViewOwn                   = "Employees.View.Own";
@@ -128,7 +128,7 @@ namespace worksquare.Permissions
             public const string ViewAttendanceCompany     = "Employees.ViewAttendance.Company";
         }
 
-        // ── Clients ───────────────────────────────────────────────────────
+        // Clients
         public static class Clients
         {
             public const string View                = "Clients.View";
@@ -139,7 +139,7 @@ namespace worksquare.Permissions
             public const string Archive             = "Clients.Archive";
         }
 
-        // ── Leave ─────────────────────────────────────────────────────────
+        // Leave
         public static class Leave
         {
             public const string ApplyOwn            = "Leave.Apply.Own";
@@ -156,7 +156,7 @@ namespace worksquare.Permissions
             public const string AdjustBalance       = "Leave.AdjustBalance";
         }
 
-        // ── Notes ─────────────────────────────────────────────────────────
+        // Notes
         public static class Notes
         {
             public const string ViewOwn             = "Notes.View.Own";
@@ -171,7 +171,7 @@ namespace worksquare.Permissions
             public const string DeleteCompany       = "Notes.Delete.Company";
         }
 
-        // ── My Day ────────────────────────────────────────────────────────
+        // My Day
         public static class MyDay
         {
             public const string SubmitOwn               = "MyDay.Submit.Own";
@@ -187,7 +187,7 @@ namespace worksquare.Permissions
             public const string FilterByDate            = "MyDay.FilterByDate";
         }
 
-        // ── Community (Coffee Community) ──────────────────────────────────
+        // Community (Coffee Community)
         public static class Community
         {
             public const string View                     = "Community.View";
@@ -204,7 +204,7 @@ namespace worksquare.Permissions
             public const string Mute                     = "Community.Mute";
         }
 
-        // ── Reports ───────────────────────────────────────────────────────
+        // Reports
         public static class Reports
         {
             public const string ViewOwn                  = "Reports.View.Own";
@@ -215,7 +215,7 @@ namespace worksquare.Permissions
             public const string ViewHappinessTrend       = "Reports.ViewHappinessTrend";
         }
 
-        // ── Users & Permission Management ─────────────────────────────────
+        // Users & Permission Management
         public static class Users
         {
             public const string View                     = "Users.View";
@@ -228,7 +228,7 @@ namespace worksquare.Permissions
             public const string RevokeSession            = "Users.RevokeSession";
         }
 
-        // ── Company Settings ──────────────────────────────────────────────
+        // Company Settings
         public static class Company
         {
             public const string View                     = "Company.View";
@@ -237,7 +237,7 @@ namespace worksquare.Permissions
             public const string ViewBilling              = "Company.ViewBilling";
         }
 
-        // ── Archive ───────────────────────────────────────────────────────
+        // Archive
         public static class Archive
         {
             public const string ViewOwn                  = "Archive.View.Own";
@@ -247,7 +247,7 @@ namespace worksquare.Permissions
             public const string PermanentDelete          = "Archive.PermanentDelete";
         }
 
-        // ── Terminal (System-level only) ──────────────────────────────────
+        // Terminal (System-level only)
         public static class Terminal
         {
             public const string Access                   = "Terminal.Access";
