@@ -1,7 +1,4 @@
-﻿using worksquare.Enum;
-using worksquare.Model;
-
-namespace worksquare.DTO
+﻿namespace worksquare.DTO
 {
     public class CompanyDTO
     {

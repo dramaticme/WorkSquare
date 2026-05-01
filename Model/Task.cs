@@ -1,4 +1,6 @@
-﻿using worksquare.Enum;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using worksquare.Enum;
 
 namespace worksquare.Model
 {
@@ -11,15 +13,36 @@ namespace worksquare.Model
         public required Project Project { get; set; }
         public required PriorityEnum Priority { get; set; }
         public required int AssignedTo { get; set; }
+        public Employee AssignedEmployee { get; set; } = null!;
         //Store EmployeeID of the employee to whom the task is assigned such that all details of the employee can be accessed through Employee table
 
         public required DateTime DueDate { get; set; }
-        //This feild is notin use for now but it can be used in future to set a deadline for the task
+        //This field is not in use for now but it can be used in future to set a deadline for the task
 
         public required WorkStatusEnum TaskStatus { get; set; }
 
         public bool IsBookmarked { get; set; } = false;
 
+        public class Configuration : IEntityTypeConfiguration<Task>
+        {
+            public void Configure(EntityTypeBuilder<Task> builder)
+            {
+                builder.HasKey(t => t.Id);
 
+                builder.Property(t => t.TaskName).HasMaxLength(256);
+
+                // Task → Project (many-to-one)
+                builder.HasOne(t => t.Project)
+                       .WithMany(p => p.Tasks)
+                       .HasForeignKey(t => t.ProjectId)
+                       .OnDelete(DeleteBehavior.Cascade);
+
+                // AssignedTo → Employee (required FK)
+                builder.HasOne(t => t.AssignedEmployee)
+                       .WithMany()
+                       .HasForeignKey(t => t.AssignedTo)
+                       .OnDelete(DeleteBehavior.Restrict);
+            }
+        }
     }
 }

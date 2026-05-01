@@ -1,4 +1,6 @@
-﻿using worksquare.Enum;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using worksquare.Enum;
 
 namespace worksquare.Model
 {
@@ -23,5 +25,20 @@ namespace worksquare.Model
 
         public ICollection<Project>? Projects { get; set; }
 
+        public class Configuration : IEntityTypeConfiguration<Client>
+        {
+            public void Configure(EntityTypeBuilder<Client> builder)
+            {
+                builder.HasKey(c => c.Id);
+
+                builder.Property(c => c.ContactEmail).HasMaxLength(256);
+                builder.Property(c => c.ContactPhone).HasMaxLength(20);
+
+                builder.HasOne(c => c.Company)
+                       .WithMany(co => co.Clients)
+                       .HasForeignKey(c => c.CompanyId)
+                       .OnDelete(DeleteBehavior.Cascade);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace worksquare.Model
 {
@@ -15,6 +16,16 @@ namespace worksquare.Model
         public required ICollection<Client> Clients { get; set; }
         public required ICollection<Project> Projects { get; set; }
 
+        public class Configuration : IEntityTypeConfiguration<Company>
+        {
+            public void Configure(EntityTypeBuilder<Company> builder)
+            {
+                builder.HasKey(c => c.Id);
 
+                builder.HasOne(c => c.CompanyDetails)
+                       .WithOne(cd => cd.Company)
+                       .HasForeignKey<CompanyDetails>(cd => cd.CompanyId);
+            }
+        }
     }
 }
